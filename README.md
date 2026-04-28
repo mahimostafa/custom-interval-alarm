@@ -38,6 +38,7 @@ Clone the repository:
 git clone https://github.com/your-username/custom-interval-alarm.git
 cd custom-interval-alarm
 ```
+* **Replace "your-username" with Your Username**
 
 Run the app:
 
