@@ -37,7 +37,7 @@ cd custom-interval-alarm
 Run the app:
 
 ```bash
-python reminder-alert-2.0.py
+python3 reminder-alert-2.0.py
 ```
 
 > The script will try to install missing dependencies automatically if needed.
