@@ -1,80 +1,103 @@
 # ⏰ Custom Interval Alarm
 
-I built this small app to solve a simple problem:  
-sometimes you just need a reminder that repeats — not a one-time alarm.
+I built this small app to solve a simple problem — sometimes you just need a reminder that repeats, not a one-time alarm.
 
-This is a lightweight desktop app where you can set a time interval, and it will keep reminding you until you stop it. Great for studying, taking breaks, or staying consistent with habits.
+This is a lightweight desktop app where you can set a time interval, and it will keep reminding you until you stop it. It’s useful for studying, taking breaks, or building consistent habits.
 
 ---
 
 ## ✨ What it does
 
-- Lets you set a repeating alarm (every 5, 10, 15 mins, etc.)
-- Shows a live countdown so you always know what’s next
-- Allows you to use your own sound (MP3/WAV)
-- Falls back to a basic beep if you don’t choose one
-- Simple, clean interface — no clutter
+* Set a repeating alarm (every 5, 10, 15 minutes, etc.)
+* See a live countdown timer
+* Use your own alarm sound (MP3/WAV)
+* Default beep if no sound is selected
+* Simple and clean interface
 
 ---
 
 ## 🛠 Built with
 
-- Python  
-- Tkinter (for the UI)  
-- Pygame (for sound)  
-- Threading (so the app doesn’t freeze)
+* Python
+* Tkinter (GUI)
+* Pygame (audio playback)
+* Threading (for smooth performance)
 
 ---
 
 ## 🚀 Getting started
 
-Clone the repo:
+Clone the repository:
 
 ```bash
 git clone https://github.com/your-username/custom-interval-alarm.git
 cd custom-interval-alarm
+```
 
 Run the app:
 
+```bash
 python reminder-alert-2.0.py
+```
 
-The script will try to install missing dependencies automatically if needed.
+> The script will try to install missing dependencies automatically if needed.
 
-🧑‍💻 How to use
-Pick a time interval
-(Optional) Select a custom sound
-Click Start Alarm
-Let it run in the background
+---
 
-When time’s up:
+## 🧑‍💻 How to use
 
-The sound plays
-A popup shows up
+1. Select your desired time interval
+2. (Optional) Choose a custom sound
+3. Click **Start Alarm**
+4. Let it run in the background
 
-Click OK, and it starts counting again.
+When the time is up:
 
-💡 Why I made this
+* The alarm sound will play
+* A popup will appear
+
+Click **OK** to stop the alarm and restart the cycle.
+
+---
+
+## 💡 Why I made this
 
 Most reminder apps are either too complex or don’t support simple repeating intervals the way I wanted.
-So I made my own — something minimal, fast, and actually useful.
+So I made something minimal, fast, and actually useful.
 
-⚠️ A couple of notes
-If you don’t select a sound, Windows will use a basic beep
-On other systems, it’s better to choose a sound file
-Works best with Python 3 installed properly
-🔧 Things I might add later
-Custom time input (instead of fixed options)
-Multiple alarms
-Dark mode
-Saving your settings
-🤝 Contributions
+---
 
-If you’ve got ideas or improvements, feel free to fork it or open a PR.
+## ⚠️ Notes
 
-📄 License
+* If no sound is selected, Windows uses a basic beep
+* On macOS/Linux, it's better to choose a sound file
+* Make sure Python is properly installed on your system
 
-MIT — use it however you want.
+---
 
-👤 Author
+## 🔧 Future improvements
 
-Made by Mahi Mostafa
+* Custom time input (instead of fixed options)
+* Multiple alarms
+* Dark mode
+* Saving user preferences
+
+---
+
+## 🤝 Contributing
+
+Feel free to fork the project and improve it. Pull requests are welcome!
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
+
+---
+
+## 👤 Author
+
+Made by **Mahi Mostafa**
+
+---
