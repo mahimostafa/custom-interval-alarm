@@ -1,6 +1,6 @@
 <img src="Assets/banner.png" width="100%">
 <p align="center">
-  <img src="banner.png" alt="Custom Interval Alarm Banner" width="100%">
+
 
 
 # ⏰ Custom Interval Alarm
