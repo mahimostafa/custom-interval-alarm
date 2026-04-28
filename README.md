@@ -1,3 +1,6 @@
+<img src="assets/banner.png" width="100%">
+
+
 # ⏰ Custom Interval Alarm
 
 I built this small app to solve a simple problem — sometimes you just need a reminder that repeats, not a one-time alarm.
