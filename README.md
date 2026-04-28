@@ -85,7 +85,7 @@ So I made something minimal, fast, and actually useful.
 
 * Custom time input (instead of fixed options)
 * Multiple alarms
-* Dark mode
+* Mode switcher ( Light/Dark )
 * Saving user preferences
 
 ---
