@@ -27,15 +27,12 @@ def setup_and_relaunch():
                 venv.create(VENV_DIR, with_pip=True)
             except Exception as e:
                 print(f"[!] Failed to create venv: {e}")
-                print("[!] Note: On Debian/Ubuntu, you may need to run: sudo apt install python3-venv")
                 sys.exit(1)
         
         print("[*] Re-launching application inside the virtual environment...")
-        # Relaunch THIS script, but using the virtual environment's python
         subprocess.run([venv_python, os.path.abspath(__file__)])
-        sys.exit(0) # Exit the outer system-python process
+        sys.exit(0)
 
-# Run the bootstrapper
 setup_and_relaunch()
 
 # ==========================================
@@ -48,8 +45,6 @@ except ImportError:
     print("[*] First run detected: Installing required packages into the virtual environment...")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
     subprocess.check_call([sys.executable, "-m", "pip", "install", "customtkinter", "pygame"])
-    
-    # Import again after installing
     import customtkinter as ctk
     import pygame
 
@@ -61,7 +56,6 @@ from tkinter import filedialog
 import threading
 import time
 
-# Set global appearance and color theme
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
@@ -92,6 +86,9 @@ class AlarmApp(ctk.CTk):
         self.alarm_sound_path = None
         self.interval_minutes = 0
         self.time_left = 0
+        
+        # Threading event to pause timer while popup is open
+        self.wait_for_user_event = threading.Event()
 
         self.create_widgets()
 
@@ -197,7 +194,6 @@ class AlarmApp(ctk.CTk):
             self.sound_label.configure(text=f"Selected: {filename}", text_color=ACCENT_GREEN)
 
     def start_alarm(self):
-        # Extract the integer from the string (e.g., "15 minutes" -> 15)
         try:
             self.interval_minutes = int(self.interval_var.get().split()[0])
         except ValueError:
@@ -219,6 +215,8 @@ class AlarmApp(ctk.CTk):
 
     def stop_alarm(self):
         self.is_running = False
+        self.wait_for_user_event.set() # Unpause thread if it was waiting
+        
         self.start_btn.configure(state="normal", fg_color=ACCENT_GREEN)
         self.stop_btn.configure(state="disabled")
         self.interval_dropdown.configure(state="normal")
@@ -228,41 +226,49 @@ class AlarmApp(ctk.CTk):
         self.repeat_label.configure(text="")
         self.countdown_label.configure(text="-- : --")
         pygame.mixer.music.stop()
+        
+    def update_countdown_ui(self, time_str):
+        # Helper function to safely update the UI from the background thread
+        self.countdown_label.configure(text=time_str)
 
     def run_timer(self):
         while self.is_running:
             self.time_left = self.interval_minutes * 60
             
             while self.time_left > 0 and self.is_running:
-                # Update countdown in GUI safely
                 mins, secs = divmod(self.time_left, 60)
                 time_str = f"{mins:02d} : {secs:02d}"
                 
-                # Use after() to update GUI safely from a background thread
-                self.after(0, self.countdown_label.configure, {'text': time_str})
+                # Safely update the custom tkinter label using the helper function
+                self.after(0, self.update_countdown_ui, time_str)
                 
                 time.sleep(1)
                 self.time_left -= 1
 
             if self.is_running:
+                self.wait_for_user_event.clear()
                 self.after(0, self.trigger_alarm)
+                
+                # Pause the timer thread until the user clicks OK on the popup
+                while not self.wait_for_user_event.is_set() and self.is_running:
+                    time.sleep(0.5)
 
     def trigger_alarm(self):
         # Play Sound
         if self.alarm_sound_path and os.path.exists(self.alarm_sound_path):
             pygame.mixer.music.load(self.alarm_sound_path)
-            pygame.mixer.music.play(-1) # Loop continuously
+            pygame.mixer.music.play(-1)
         else:
-            # Fallback beep (Windows only)
             if os.name == 'nt':
                 import winsound
                 winsound.Beep(1000, 2000)
         
-        # Show popup (Blocks until user clicks OK)
+        # Show popup (Blocks the main UI thread until user clicks OK)
         messagebox.showinfo("Alarm!", f"{self.interval_minutes} minutes have passed!\nClick OK to dismiss and restart timer.")
         
-        # Stop sound when user clicks OK
+        # Stop sound and resume the background timer
         pygame.mixer.music.stop()
+        self.wait_for_user_event.set()
 
 if __name__ == "__main__":
     app = AlarmApp()
