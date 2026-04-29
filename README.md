@@ -35,10 +35,9 @@ This is a lightweight desktop app where you can set a time interval, and it will
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/custom-interval-alarm.git
+git clone https://github.com/mahimostafa/custom-interval-alarm.git
 cd custom-interval-alarm
 ```
-* **Replace "your-username" with Your Username**
 
 Run the app:
 
