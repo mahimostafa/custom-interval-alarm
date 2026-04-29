@@ -45,7 +45,7 @@ Run the app:
 python3 reminder-alert-3.0.py
 ```
 
-> The script will try to install missing dependencies automatically if needed.
+> The script will try to create a virtual environment and install missing dependencies automatically if needed.
 
 ---
 
